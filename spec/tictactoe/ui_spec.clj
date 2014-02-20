@@ -18,6 +18,23 @@
     (should= "1 X 3\n4 5 O\n7 8 X\n" 
       (with-out-str (print-board [1 "X" 3 4 5 "O" 7 8 "X"]))))
 
+  (it "prints player turn message"
+    (should= "Player X - Make your move.\n" 
+      (with-out-str (player-move-message "X"))))
+
+  (it "prints invalid move message"
+    (should= "9 is an invalid move.\n" 
+      (with-out-str (invalid-move-message 9))))
+
+  (it "prints gameover message"
+    (should= "Game over! Player 'X' wins!\n" 
+      (with-out-str (game-over-message "Player 'X' wins!"))))
+
+  (it "gets cell number from human player"
+    (should= "3" 
+      (with-in-str "3"
+        (get-move "X"))))
+
 )
 
 
