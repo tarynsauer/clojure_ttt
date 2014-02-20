@@ -1,6 +1,6 @@
 (ns tictactoe.board)
 
-(def piece ["X" "O"])
+(def piece ["X" "O"]) 
 
 (def x-win (repeat 3 (first piece)))
 
@@ -8,14 +8,6 @@
 
 (defn new-board [total-cells] 
   (vec (range 1 (inc total-cells))))
-
-(defn current-player [board]
-  (if (even? (count (filter string? board)))
-    (first piece)
-    (second piece)))
-
-(defn make-move [board i]
-  (assoc board (dec i) (current-player board)))
 
 (defn winning-row? [board]
   (loop [board board row []]
@@ -46,3 +38,18 @@
         (if (= 2 begin-i)
         (do false)
          (recur (+ 2 begin-i) middle-i (- end-i 2)))))))
+
+(defn open-cell? [board cell]
+  (integer? (get board (dec cell))))
+
+(defn valid-cell? [cell]
+  (and (integer? cell) (> cell 0) (< cell 10)))
+
+(defn remaining-spaces? [board]
+  (loop [index 0]
+    (let [cell (get board index)]
+      (if (integer? cell)
+        (do true)
+        (if (= 8 index)
+          (do false)
+            (recur (inc index)))))))
