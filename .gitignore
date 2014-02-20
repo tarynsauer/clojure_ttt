@@ -6,6 +6,7 @@ pom.xml
 *.jar
 *.class
 *.swp
+*.clj.swp
 .lein-deps-sum
 .lein-failures
 .lein-plugins
