@@ -40,10 +40,10 @@
          (recur (+ 2 begin-i) middle-i (- end-i 2)))))))
 
 (defn open-cell? [board cell]
-  (integer? (get board (dec cell))))
+  (integer? (get board (dec (read-string cell)))))
 
 (defn valid-cell? [cell]
-  (and (integer? cell) (> cell 0) (< cell 10)))
+  (and (integer? (read-string cell)) (< 0 (read-string cell)) (> 10 (read-string cell))))
 
 (defn remaining-spaces? [board]
   (loop [index 0]
@@ -52,4 +52,4 @@
         (do true)
         (if (= 8 index)
           (do false)
-            (recur (inc index)))))))
+           (recur (inc index)))))))

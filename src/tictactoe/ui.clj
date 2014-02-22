@@ -11,9 +11,13 @@
 (defn invalid-move-message [move]
   (println  move "is an invalid move."))
 
-(defn game-over-message [game-outcome]
-  (println "Game over!" game-outcome))
+(defn game-won-message [piece]
+  (println "Game over! Player" piece "wins!"))
 
-(defn get-move [piece]
-  (println player-move-message [piece])
+(defn tie-game-message []
+  (println "Game over! It's a tie!"))
+
+(defn get-move [piece board]
+  (println (player-move-message piece))
+  (print-board board)
   (read-line))

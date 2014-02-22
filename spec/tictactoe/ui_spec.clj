@@ -1,6 +1,6 @@
 (ns tictactoe.ui-spec
-  (:require [speclj.core :refer :all]
-            [tictactoe.ui :refer :all]))
+  (:use speclj.core)
+  (:use tictactoe.ui))
 
 (describe "ui"
   (around [it]
@@ -27,13 +27,18 @@
       (with-out-str (invalid-move-message 9))))
 
   (it "prints gameover message"
-    (should= "Game over! Player 'X' wins!\n" 
-      (with-out-str (game-over-message "Player 'X' wins!"))))
+    (should= "Game over! Player X wins!\n" 
+      (with-out-str (game-won-message "X"))))
+
+ (it "prints gameover message"
+    (should= "Game over! It's a tie!\n" 
+      (with-out-str (tie-game-message))))
 
   (it "gets cell number from human player"
     (should= "3" 
       (with-in-str "3"
-        (get-move "X"))))
+        (get-move "X" [1 2 3 4 5 6 7 8 9]))))
+
 
 )
 
