@@ -7,6 +7,11 @@
     (first piece)
     (second piece)))
 
+(defn opponent [board]
+  (if (odd? (count (filter string? board)))
+    (first piece)
+    (second piece)))
+
 (defn apply-move [board move]
   (assoc board (dec (read-string move)) (current-player board)))
 
@@ -20,8 +25,8 @@
       (not(remaining-spaces? board))))
 
 (defn game-over-message [board piece]
-  (winning-game? board
-    (game-won-message piece)
+  (if (winning-game? board) 
+    (game-won-message piece board)
     (tie-game-message))) 
 
 (defn valid-move? [board move]
@@ -39,9 +44,8 @@
 (defn play [board]
   (loop [board board]
     (if (game-over? board)
-      (game-over-message board (current-player board))
+      (game-over-message board (opponent board))
       (let [move (get-move (current-player board) board)]
         (if (valid-move? board move) 
           (recur (apply-move board move))
           (recur board))))))
-
