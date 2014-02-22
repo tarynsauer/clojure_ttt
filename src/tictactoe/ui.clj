@@ -18,6 +18,6 @@
   (println "Game over! It's a tie!"))
 
 (defn get-move [piece board]
-  (println (player-move-message piece))
+  (player-move-message piece)
   (print-board board)
   (read-line))
