@@ -38,4 +38,9 @@
     (should= "3" 
       (with-in-str "3"
         (get-move "X" [1 2 3 4 5 6 7 8 9]))))
+
+  (it "prints select player type message"
+    (should= "For player X - Enter 'human' or 'computer' for player type.\n"
+    (with-out-str (get-player-type-message "X"))))
 )
+

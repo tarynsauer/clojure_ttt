@@ -23,3 +23,13 @@
   (player-move-message piece)
   (print-board board)
   (read-line))
+
+(defn get-player-type-message [piece]
+  (println "For player" piece "- Enter 'human' or 'computer' for player type."))
+
+(defn get-player-type [piece]
+  (get-player-type-message piece)
+  (read-line)) 
+
+(defn invalid-type-message [input]
+  (println input "is an invalid type."))

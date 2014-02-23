@@ -7,5 +7,3 @@
 
 (defn -main [] 
   (play (new-board 9)))
-
-

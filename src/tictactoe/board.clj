@@ -2,6 +2,8 @@
 
 (def piece ["X" "O"]) 
 
+(def players [])
+
 (def x-win (repeat 3 (first piece)))
 
 (def o-win (repeat 3 (second piece)))
