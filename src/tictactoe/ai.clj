@@ -22,14 +22,11 @@
     (if (game-over? board)
       (get-score board piece)
       (let [best-score []]
-        (if (= piece @max-player-piece)
-          (doseq [cell-id (filter integer? board)] 
-            (let [score (recur (apply-move board (str cell-id)) (current-player board) (inc depth))]
-              (conj best-score (/ score depth))))
+        (doseq [cell-id (filter integer? board)] 
+          (let [score (recur (apply-move board (str cell-id)) (current-player board) (inc depth))]
+            (conj best-score (/ score depth)))) 
+          (if (= piece @max-player-piece)
             (apply max best-score)
-          (doseq [cell-id (filter integer? board)] 
-            (let [score (recur (apply-move board (str cell-id)) (current-player board) (inc depth))]
-              (conj best-score (/ score depth))))
             (apply min best-score)))))) 
 
 (defn get-move-score [board, piece, cell]
