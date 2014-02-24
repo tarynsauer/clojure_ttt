@@ -43,28 +43,30 @@
   (it "returns true when valid"
     (should= true 
       (valid-move? [1 2 3 4 5 6 7 8 9] "7"))) 
-
   
-(it "returns true when player type is valid"
+  (it "returns true for human player type"
     (should= true 
       ( valid-type? "human")))
 
-  (it "returns true when player type is valid"
+  (it "returns true for computer player type"
     (should= true 
       ( valid-type? "computer")))
+  
+  (it "returns true for ai player type"
+    (should= true 
+      ( valid-type? "ai")))
 
   (it "returns nil when player type is invalid"
     (should= nil 
       ( valid-type? "x")))
 
-  ;; (it "sets player type for player X"
-  ;;   (should= ["computer"]
-  ;;     (update-player-types "computer")
-  ;;     (first @player-types)))
+  (it "sets player type for player X"
+    (should= "computer" 
+      (update-player-types "X" "computer")))
 
-  ;; (it "sets player type for player O"
-  ;;   (should= ["computer human"] 
-  ;;     (update-player-types "human")))
+  (it "sets player type for player O"
+    (should= "human" 
+      (update-player-types "O" "human")))
 
   (it "sets player type for player X"
     (should= "computer" 
@@ -93,12 +95,12 @@
       (with-in-str "3"
         (next-move ["X" 2 3 4 5 6 7 8 9]))))
 
-  ;; (it "adds valid move to the board and returns the board"
-  ;;   (should= ["X" "O" "X" 
-  ;;             "O" "X" "O" 
-  ;;             "O" "X" "X"] 
-  ;;    (play ["X" "O" "X" 
-  ;;                "O" "X" "O" 
-  ;;                "O" "X" 9])))
-  ;;  
+  (it "adds valid move to the board and returns the board"
+    (should= ["X" "O" "X" 
+              "O" "X" "O" 
+              "O" "X" "X"] 
+     (next-move ["X" "O" "X" 
+            "O" "X" "O" 
+            "O" "X" 9])))
+   
 )

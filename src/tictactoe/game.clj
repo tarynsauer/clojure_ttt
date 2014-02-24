@@ -1,12 +1,11 @@
 (ns tictactoe.game
   (:use tictactoe.board)
-  (:use tictactoe.game)
   (:use tictactoe.ui))
 
 (def x-player-type (atom "human"))
 (def o-player-type (atom "human"))
 
-(def possible-player-types ["human" "computer"])
+(def player-types ["human" "computer" "ai"])
 
 (defn current-player [board]
   (if (even? (count (filter string? board)))
@@ -29,7 +28,7 @@
     (reset! o-player-type new-type)))
 
 (defn valid-type? [input]
-  (if (or (= (first possible-player-types) input) (= (second possible-player-types) input)) 
+  (if (or (= (first player-types) input) (= (second player-types) input) (= (last player-types) input)) 
     (do true)
     (invalid-type-message input)))
 
@@ -65,7 +64,7 @@
   (str (first (filter integer? (shuffle board)))))
 
 (defn get-move [piece board]
-  (if (= (current-player-type board) (first possible-player-types))
+  (if (= (current-player-type board) (first player-types))
     (get-human-move piece board)
     (get-computer-move board)))
 
