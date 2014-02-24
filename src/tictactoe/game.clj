@@ -3,33 +3,10 @@
   (:use tictactoe.game)
   (:use tictactoe.ui))
 
-(def player-types ["human", "computer"])
+(def x-player-type (atom "human"))
+(def o-player-type (atom "human"))
 
-(def player-x (atom "human"))
-
-(def player-o (atom "human"))
-
-(defn update-player-x [player-type] 
-  (reset! player-x player-type))
-
-(defn update-player-o [player-type] 
-  (reset! player-o player-type))
-
-(defn valid-type? [input]
-  (if (or (= (first player-types) input) (= (second player-types) input)) 
-    (do true)
-    (invalid-type-message input)))
-
-(defn apply-player-type [player-type player-piece]
-  (if (= player-piece (first piece))
-    (update-player-x player-type)
-    (update-player-o player-type)))
- 
-(defn set-player-type [piece]
-  (let [player-type (get-player-type piece)]
-     (if (valid-type? player-type) 
-        (apply-player-type player-type piece)
-        (recur piece))))
+(def possible-player-types ["human" "computer"])
 
 (defn current-player [board]
   (if (even? (count (filter string? board)))
@@ -37,14 +14,30 @@
     (second piece)))
 
 (defn current-player-type [board]
-  (if (= (current-player board) "X")
-    @player-x
-    @player-o))
+  (if (= (current-player board) (first piece))
+     @x-player-type 
+     @o-player-type))
 
 (defn opponent [board]
   (if (odd? (count (filter string? board)))
     (first piece)
     (second piece)))
+ 
+(defn update-player-types [player-piece new-type] 
+  (if (= player-piece (first piece))
+    (reset! x-player-type new-type)
+    (reset! o-player-type new-type)))
+
+(defn valid-type? [input]
+  (if (or (= (first possible-player-types) input) (= (second possible-player-types) input)) 
+    (do true)
+    (invalid-type-message input)))
+
+(defn set-player-type [piece]
+  (let [player-type (get-player-type piece)]
+     (if (valid-type? player-type) 
+        (update-player-types piece player-type)
+        (recur piece))))
 
 (defn apply-move [board move]
   (assoc board (dec (read-string move)) (current-player board)))
@@ -68,6 +61,14 @@
     (do true)
     (invalid-move-message move)))
 
+(defn get-computer-move [board]
+  (str (first (filter integer? (shuffle board)))))
+
+(defn get-move [piece board]
+  (if (= (current-player-type board) (first possible-player-types))
+    (get-human-move piece board)
+    (get-computer-move board)))
+
 (defn next-move [board]
   (let [move (get-move (current-player board) board)]
         (if (valid-move? board move) 
@@ -75,8 +76,6 @@
           (recur board))))
 
 (defn play [board]
-  (set-player-type (first piece))
-  (set-player-type (second piece)) 
   (loop [board board]
     (if (game-over? board)
       (game-over-message board (opponent board))

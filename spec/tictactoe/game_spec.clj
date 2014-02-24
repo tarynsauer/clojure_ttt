@@ -44,25 +44,8 @@
     (should= true 
       (valid-move? [1 2 3 4 5 6 7 8 9] "7"))) 
 
-  (it "adds valid move to the board and returns the board"
-    (should= [1 2 "X" 4 5 6 7 8 9] 
-      (with-in-str "3"
-        (next-move [1 2 3 4 5 6 7 8 9]))))
-
-  (it "adds valid move to the board and returns the board"
-    (should= [1 2 "X" 4 5 6 7 8 9] 
-      (with-in-str "3"
-        (next-move [1 2 3 4 5 6 7 8 9])))) 
-
-  ;; (def uniq-id (atom 1))
-  ;; (defn get-next [] (swap! uniq-id inc))
-
-  ;; (it "adds invalid value and then a valid value"
-  ;;   (should= ["X" "O" 3 4 5 6 7 8 9] 
-  ;;     (with-in-str (str (get-next)) 
-  ;;       (next-move ["X" 2 3 4 5 6 7 8 9]))))
-
-  (it "returns true when player type is valid"
+  
+(it "returns true when player type is valid"
     (should= true 
       ( valid-type? "human")))
 
@@ -74,13 +57,19 @@
     (should= nil 
       ( valid-type? "x")))
 
+  ;; (it "sets player type for player X"
+  ;;   (should= ["computer"]
+  ;;     (update-player-types "computer")
+  ;;     (first @player-types)))
+
+  ;; (it "sets player type for player O"
+  ;;   (should= ["computer human"] 
+  ;;     (update-player-types "human")))
+
   (it "sets player type for player X"
     (should= "computer" 
-      (apply-player-type "computer" "X")))
-
-  (it "sets player type for player O"
-    (should= "human" 
-      (apply-player-type "human" "O")))
+      (with-in-str "computer"
+        (set-player-type "X"))))
 
   (it "sets player type for player O"
     (should= "human" 
@@ -91,4 +80,25 @@
     (should= "human" 
       (current-player-type ["X" 2 3 4 5 6 7 8 9])))
 
+  (it "returns an available cell id"
+    (should= "2" 
+      (get-computer-move ["X" 2 "O" "X" "O" "X" "O" "X" "O"])))
+
+   (it "returns a random cell id"
+    (should= true 
+      (string? (get-computer-move [1 2 3 4 5 6 7 8 9]) )))
+
+  (it "adds valid move to the board and returns the board"
+    (should= ["X" 2 "O" 4 5 6 7 8 9] 
+      (with-in-str "3"
+        (next-move ["X" 2 3 4 5 6 7 8 9]))))
+
+  ;; (it "adds valid move to the board and returns the board"
+  ;;   (should= ["X" "O" "X" 
+  ;;             "O" "X" "O" 
+  ;;             "O" "X" "X"] 
+  ;;    (play ["X" "O" "X" 
+  ;;                "O" "X" "O" 
+  ;;                "O" "X" 9])))
+  ;;  
 )

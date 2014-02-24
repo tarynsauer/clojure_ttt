@@ -19,7 +19,7 @@
   (print-board board)
   (println "Game over! It's a tie!"))
 
-(defn get-move [piece board]
+(defn get-human-move [piece board]
   (player-move-message piece)
   (print-board board)
   (read-line))
