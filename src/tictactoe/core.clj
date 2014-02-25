@@ -1,5 +1,4 @@
 (ns tictactoe.core
-  (:require [clojure.java.io :as io])
   (:use tictactoe.board)
   (:use tictactoe.ai) 
   (:use tictactoe.ui) 

@@ -1,5 +1,6 @@
 (ns tictactoe.game-spec
   (:use speclj.core)
+  (:use tictactoe.core-spec)
   (:use tictactoe.game))
 
 (describe "game"
@@ -46,6 +47,11 @@
       (with-in-str "human"
         (set-player-type "O"))))
 
+  (it "should reject an invalid player type"
+    (should= "human"
+      (with-in-str (make-input '("batman" "best type" "human"))
+        (set-player-type "X"))))
+
   (it "returns current player type"
     (should= "human" 
       (current-player-type ["X" 2 3 4 5 6 7 8 9])))
@@ -61,12 +67,10 @@
   (it "adds valid move to the board and returns the board"
     (should= ["X" 2 "O" 4 5 6 7 8 9] 
       (with-in-str "3"
-        (next-move ["X" 2 3 4 5 6 7 8 9]))))
+       (next-move ["X" 2 3 4 5 6 7 8 9]))))
 
   (it "adds valid move to the board and returns the board"
-    (should= ["X" "O" "X" 
-              "O" "X" "O" 
-              "O" "X" "X"] 
-     (next-move ["X" "O" "X" 
-            "O" "X" "O" 
-            "O" "X" 9]))))
+    (should= ["X" 2 "O" 4 5 6 7 8 9] 
+      (with-in-str "3"
+        (next-move ["X" 2 3 4 5 6 7 8 9]))))
+)

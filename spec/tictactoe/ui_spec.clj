@@ -27,17 +27,17 @@
       (with-out-str (invalid-move-message 9))))
 
   (it "prints gameover message"
-    (should= "1 2 3\n4 5 6\n7 8 9\nGame over! Player X wins!\n" 
+    (should= "Game over! Player X wins!\n1 2 3\n4 5 6\n7 8 9\n" 
       (with-out-str (game-won-message "X" [1 2 3 4 5 6 7 8 9]))))
 
  (it "prints gameover message"
-    (should= "1 2 3\n4 5 6\n7 8 9\nGame over! It's a tie!\n" 
+    (should= "Game over! It's a tie!\n1 2 3\n4 5 6\n7 8 9\n"
       (with-out-str (tie-game-message [1 2 3 4 5 6 7 8 9]))))
 
   (it "gets cell number from human player"
     (should= "3" 
       (with-in-str "3"
-        (get-human-move [1 2 3 4 5 6 7 8 9] "X"))))
+        (get-human-move))))
 
   (it "prints select player type message"
     (should= "For player X - Enter 'human' or 'computer' or 'ai' for player type.\n"

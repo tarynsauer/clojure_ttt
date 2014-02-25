@@ -44,13 +44,15 @@
 
 (defn get-move [piece board]
   (cond (= (current-player-type board) (first player-types))
-    (get-human-move board piece)
+    (get-human-move)
     :else
     (if (= (current-player-type board) (second player-types))
       (get-computer-move board)
       (get-ai-move board piece))))
 
 (defn next-move [board]
+  (player-move-message (current-player board))
+  (print-board board)
   (let [move (get-move (current-player board) board)]
         (if (valid-move? board move) 
           (apply-move board move)
