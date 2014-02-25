@@ -4,6 +4,11 @@
 
 (describe "ai"
 
+  (it "returns all open cells"
+    (should= '(6 7 8 9) 
+      (open-cells ["X" "X" "X" "O" "O" 6 7 8 9])))
+
+
   (it "returns 1 for current player win"
     (should= 1
       (get-score ["X" "X" "X"
