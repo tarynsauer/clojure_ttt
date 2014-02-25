@@ -10,6 +10,10 @@
 
 (def max-player-piece (atom "X"))
 
+(def max-best-value (atom -999))
+
+(def min-best-value (atom 999))
+
 (defn get-score [board piece]
   (if (winning-game? board)
     (if (= (opponent board) piece)
@@ -17,17 +21,20 @@
       loss)
      tie)) 
 
+(defn update-best-value [board piece depth]
+  (let [score (/ (get-score board piece) depth)]
+    (if (= piece @max-player-piece)
+      (if (score > @max-best-value) (swap! max-best-value score))
+      (if (score < @min-best-value) (swap! min-best-value score)))))
+
 (defn apply-minimax [board, piece, depth]
   (loop [board board, piece piece, depth depth]
+    (if (> depth 0) (update-best-value board piece depth))
     (if (game-over? board)
       (get-score board piece)
-      (let [best-score []]
-        (doseq [cell-id (filter integer? board)] 
-          (let [score (recur (apply-move board (str cell-id)) (current-player board) (inc depth))]
-            (conj best-score (/ score depth)))) 
-          (if (= piece @max-player-piece)
-            (apply max best-score)
-            (apply min best-score)))))) 
+      (doseq [cell-id (filter integer? board)]  ;; if zero integers left, then return max/min best value
+        (let [board (apply-move board (str cell-id))]
+          (recur board (current-player board) (inc depth)))))))
 
 (defn get-move-score [board, piece, cell]
    (let [board (apply-move board (str cell)), depth 0] 
