@@ -8,6 +8,13 @@
     (should= [1 2 3 4 5 6 7 8 9]     
       (new-board 9)))
 
+  (it "returns true for an empty board"
+    (should= true 
+      (empty-board? [1 2 3 4 5 6 7 8 9])))
+
+  (it "returns false for a non-empty board"
+    (should=  false (empty-board? [1 2 3 4 5 "X" 7 8 9]))) 
+
   (it "gets the current player marker"
     (should= "X" 
       (current-player [1 2 3 4 5 6 7 8 9])))
@@ -100,7 +107,7 @@
     (should= false 
       (valid-cell? "21")))
 
-(it "returns true for a valid cell id number"
+  (it "returns true for a valid cell id number"
     (should= true 
       (valid-cell? "9")))
 
@@ -110,9 +117,6 @@
 
   (it "returns true when there is a remaining space"
     (should= true 
-      (remaining-spaces? ["X" "O" 3 "O" "X" "O" "X" "O" "X"])))
-
+      (remaining-spaces? ["X" "O" 3 "O" "X" "O" "X" "O" "X"]))) 
 )
-
-
 

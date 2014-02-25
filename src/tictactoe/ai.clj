@@ -43,4 +43,6 @@
   (key (apply max-key val (reverse (into {} (map vector (vec (filter integer? board)) (vec (rank-possible-moves board piece))))))))
 
 (defn get-ai-move [board piece]
-  (str (get-best-move board piece)))
+  (if (empty-board? board)
+    "1"
+    (str (get-best-move board piece))))

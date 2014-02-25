@@ -19,6 +19,9 @@
  (defn apply-move [board move]
   (assoc board (dec (read-string move)) (current-player board))) 
 
+(defn empty-board? [board]
+  (= 9 (count (filter integer? board))))
+
 (defn new-board [total-cells] 
   (vec (range 1 (inc total-cells))))
 
