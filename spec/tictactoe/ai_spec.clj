@@ -28,6 +28,18 @@
                   "O" "O" 6
                    7 8 9] "O")))
 
+ (it "returns valid string id"
+   (should= "1" 
+     (get-ai-move [1 "X" "X"
+                     4 "O" "O"
+                     7 8 9 ] "X")))
+
+ (it "returns valid string id for empty board"
+   (should= "1" 
+     (get-ai-move [1 2 3 
+                   4 5 6 
+                   7 8 9 ] "X")))
+
  (it "takes winning space when one is available"
    (should= 1 
      (get-best-move [1 "X" "X"
@@ -112,5 +124,10 @@
                      "O" "O" 6 
                      "X" 8 "X" ] "X")))
 
+ (it "chooses corner for empty board"
+   (should= 1 
+     (get-best-move [1 2 3 
+                     4 5 6 
+                     7 8 9] "X")))
 
 )

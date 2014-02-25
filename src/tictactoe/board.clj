@@ -6,6 +6,19 @@
 
 (def o-win (repeat 3 (second piece)))
 
+(defn current-player [board]
+  (if (even? (count (filter string? board)))
+    (first piece)
+    (second piece)))
+
+ (defn opponent [board]
+  (if (odd? (count (filter string? board)))
+    (first piece)
+    (second piece)))
+
+ (defn apply-move [board move]
+  (assoc board (dec (read-string move)) (current-player board))) 
+
 (defn new-board [total-cells] 
   (vec (range 1 (inc total-cells))))
 
@@ -53,3 +66,12 @@
         (if (= 8 index)
           (do false)
            (recur (inc index)))))))
+
+(defn winning-game? [board]
+  (or (winning-row? board) 
+      (winning-col? board) 
+      (winning-diag? board)))
+
+(defn game-over? [board]
+  (or (winning-game? board) 
+      (not(remaining-spaces? board))))

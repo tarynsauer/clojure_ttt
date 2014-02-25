@@ -1,27 +1,18 @@
 (ns tictactoe.game
   (:use tictactoe.board)
-  (:use tictactoe.ui))
+  (:use tictactoe.ui)
+  (:use tictactoe.ai))
 
 (def x-player-type (atom "human"))
 (def o-player-type (atom "human"))
 
 (def player-types ["human" "computer" "ai"])
 
-(defn current-player [board]
-  (if (even? (count (filter string? board)))
-    (first piece)
-    (second piece)))
-
 (defn current-player-type [board]
   (if (= (current-player board) (first piece))
      @x-player-type 
      @o-player-type))
 
-(defn opponent [board]
-  (if (odd? (count (filter string? board)))
-    (first piece)
-    (second piece)))
- 
 (defn update-player-types [player-piece new-type] 
   (if (= player-piece (first piece))
     (reset! x-player-type new-type)
@@ -38,22 +29,10 @@
         (update-player-types piece player-type)
         (recur piece))))
 
-(defn apply-move [board move]
-  (assoc board (dec (read-string move)) (current-player board)))
-
-(defn winning-game? [board]
-  (or (winning-row? board) 
-      (winning-col? board) 
-      (winning-diag? board)))
-
-(defn game-over? [board]
-  (or (winning-game? board) 
-      (not(remaining-spaces? board))))
-
 (defn game-over-message [board piece]
   (if (winning-game? board) 
     (game-won-message piece board)
-    (tie-game-message))) 
+    (tie-game-message board))) 
 
 (defn valid-move? [board move]
   (if (and (valid-cell? move) (open-cell? board move))
@@ -64,9 +43,12 @@
   (str (first (filter integer? (shuffle board)))))
 
 (defn get-move [piece board]
-  (if (= (current-player-type board) (first player-types))
-    (get-human-move piece board)
-    (get-computer-move board)))
+  (cond (= (current-player-type board) (first player-types))
+    (get-human-move board piece)
+    :else
+    (if (= (current-player-type board) (second player-types))
+      (get-computer-move board)
+      (get-ai-move board piece))))
 
 (defn next-move [board]
   (let [move (get-move (current-player board) board)]

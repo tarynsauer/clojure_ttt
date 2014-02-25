@@ -1,6 +1,5 @@
 (ns tictactoe.ai
-  (:use tictactoe.board)
-  (:use tictactoe.game))
+  (:use tictactoe.board))
 
 (declare minimax)
 
@@ -28,7 +27,7 @@
         (apply max best-scores)))))
 
 (defn minimax [board, piece, depth]
-  (for [cell-id (filter integer? board)] (/ (apply-minimax (apply-move board (str cell-id)), (current-player board) , (inc depth)) depth)))
+  (for [cell-id (filter integer? board)] (/ (apply-minimax (apply-move board (str cell-id)), (current-player board), (inc depth)) depth)))
 
 (defn get-move-score [board, piece, cell]
    (let [board (apply-move board (str cell)), depth 1] 
@@ -43,5 +42,5 @@
   (reset! current-player-piece piece) 
   (key (apply max-key val (reverse (into {} (map vector (vec (filter integer? board)) (vec (rank-possible-moves board piece))))))))
 
-(defn apply-ai-move [board piece]
-  (apply-move board (str (get-best-move board piece))))
+(defn get-ai-move [board piece]
+  (str (get-best-move board piece)))

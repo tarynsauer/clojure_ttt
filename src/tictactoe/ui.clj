@@ -19,13 +19,13 @@
   (print-board board)
   (println "Game over! It's a tie!"))
 
-(defn get-human-move [piece board]
+(defn get-human-move [board piece]
   (player-move-message piece)
   (print-board board)
   (read-line))
 
 (defn get-player-type-message [piece]
-  (println "For player" piece "- Enter 'human' or 'computer' for player type."))
+  (println "For player" piece "- Enter 'human' or 'computer' or 'ai' for player type."))
 
 (defn get-player-type [piece]
   (get-player-type-message piece)

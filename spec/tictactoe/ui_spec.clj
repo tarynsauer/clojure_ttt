@@ -37,10 +37,10 @@
   (it "gets cell number from human player"
     (should= "3" 
       (with-in-str "3"
-        (get-human-move "X" [1 2 3 4 5 6 7 8 9]))))
+        (get-human-move [1 2 3 4 5 6 7 8 9] "X"))))
 
   (it "prints select player type message"
-    (should= "For player X - Enter 'human' or 'computer' for player type.\n"
+    (should= "For player X - Enter 'human' or 'computer' or 'ai' for player type.\n"
     (with-out-str (get-player-type-message "X"))))
 )
 
