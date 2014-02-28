@@ -11,8 +11,8 @@
 
 (def current-player-piece (atom "X"))
 
-(defn open-cells [board]
-  (filter integer? board))
+(defn set-current-player [piece]
+  (reset! current-player-piece piece))
 
 (defn get-score [board piece]
   (if (winning-game? board)
@@ -30,7 +30,7 @@
         (apply max best-scores)))))
 
 (defn minimax [board, piece, depth]
-  (for [cell-id (open-cells board)] (/ (apply-minimax (apply-move board (str cell-id)), (current-player board), (inc depth)) depth)))
+  (for [cell (open-cells board)] (/ (apply-minimax (apply-move board (str cell)), (current-player board), (inc depth)) depth)))
 
 (defn get-move-score [board, piece, cell]
    (let [board (apply-move board (str cell)), depth 1] 
@@ -42,10 +42,10 @@
       (get-move-score board, piece, cell))))
  
 (defn get-best-move [board piece]
-  (reset! current-player-piece piece) 
+  (set-current-player piece)
   (key (apply max-key val (reverse (into {} (map vector (vec (open-cells board)) (vec (rank-possible-moves board piece))))))))
 
 (defn get-ai-move [board piece]
   (if (empty-board? board)
-    "1"
+    (get-random-move board) 
     (str (get-best-move board piece))))

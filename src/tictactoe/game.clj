@@ -40,7 +40,7 @@
     (invalid-move-message move)))
 
 (defn get-computer-move [board]
-  (str (first (filter integer? (shuffle board)))))
+  (get-random-move board))
 
 (defn get-move [piece board]
   (cond (= (current-player-type board) (first player-types))

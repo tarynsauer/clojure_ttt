@@ -4,10 +4,39 @@
 
 (describe "ai"
 
-  (it "returns all open cells"
-    (should= '(6 7 8 9) 
-      (open-cells ["X" "X" "X" "O" "O" 6 7 8 9])))
+  (it "returns current player piece for X"
+    (= "X" @current-player-piece))
 
+  (it "sets current player piece to O"
+    (should= "O" 
+      (set-current-player "O")))
+
+  (it "sets current player piece to X"
+    (should= "X" 
+      (set-current-player "X")))
+
+  (it "returns 1 for winning move"
+    (should= 1
+      (get-move-score ["X" "X" 3
+                        "O" "O" 6
+                        7 8 9] "X" 3)))
+
+  (it "returns 0 for blocking move"
+    (should= 0 
+      (get-move-score ["X" "X" 3
+                        "O" "O" 6
+                        7 8 9] "X" 6)))
+
+  (it "returns -1 for non-winning move"
+    (should= -1 
+      (get-move-score ["X" "X" 3
+                        "O" "O" 6
+                        7 8 9] "X" 7)))
+(it "returns a list of scores"
+    (should= '(1 0 -1 -1 -1)
+      (rank-possible-moves ["X" "X" 3
+                              "O" "O" 6
+                               7 8 9] "X")))
 
   (it "returns 1 for current player win"
     (should= 1
@@ -39,11 +68,18 @@
                      4 "O" "O"
                      7 8 9 ] "X")))
 
- (it "returns valid string id for empty board"
+ (it "returns valid string id"
    (should= "1" 
-     (get-ai-move [1 2 3 
+     (get-ai-move [1 "X" "X"
+                     4 "O" "O"
+                     7 8 9 ] "X")))
+
+
+ (it "returns valid string id for empty board"
+   (should= true
+     (string? (get-ai-move [1 2 3 
                    4 5 6 
-                   7 8 9 ] "X")))
+                   7 8 9 ] "X"))))
 
  (it "takes winning space when one is available"
    (should= 1 

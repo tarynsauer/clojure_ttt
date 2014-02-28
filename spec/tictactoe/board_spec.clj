@@ -12,6 +12,18 @@
     (should= true 
       (empty-board? [1 2 3 4 5 6 7 8 9])))
 
+  (it "returns a list of open cells"
+    (should= '(6 7 8 9) 
+      (open-cells ["X" "X" "O" "O" "X" 6 7 8 9])))
+
+  (it "returns a random cell id"
+    (should= true 
+      (string? (get-random-move [1 2 3 4 5 6 7 8 9]))))
+ 
+  (it "returns a random cell id"
+    (should= "1" 
+      (get-random-move [1 "X" "O" "X" "O" "X" "X" "O" "O"])))
+
   (it "returns false for a non-empty board"
     (should=  false (empty-board? [1 2 3 4 5 "X" 7 8 9]))) 
 

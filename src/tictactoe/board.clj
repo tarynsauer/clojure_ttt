@@ -6,6 +6,22 @@
 
 (def o-win (repeat 3 (second piece)))
 
+(defn filter-printable [obj]
+  (cond
+   (or (symbol? obj) (number? obj) (string? obj) (keyword? obj)) obj
+   (vector? obj) (apply vector (map filter-printable obj))
+   (seq? obj) (map filter-printable obj)
+   (set? obj) (into #{} (map filter-printable obj))
+   (map? obj) (into {} (for [[k v] obj]
+                         [(filter-printable k) (filter-printable v)]))
+   true [:un-readable (pr-str obj)]))
+
+(defn open-cells [board]
+  (filter integer? board)) 
+
+(defn get-random-move [board]
+  (str (first (filter integer? (shuffle board)))))
+
 (defn current-player [board]
   (if (even? (count (filter string? board)))
     (first piece)
@@ -56,10 +72,10 @@
          (recur (+ 2 begin-i) middle-i (- end-i 2)))))))
 
 (defn open-cell? [board cell]
-  (integer? (get board (dec (read-string cell)))))
+  (integer? (get board (dec (filter-printable cell)))))
 
 (defn valid-cell? [cell]
-  (and (integer? (read-string cell)) (< 0 (read-string cell)) (> 10 (read-string cell))))
+  (and (integer? (filter-printable cell)) (< 0 (filter-printable cell)) (> 10 (filter-printable cell))))
 
 (defn remaining-spaces? [board]
   (loop [index 0]

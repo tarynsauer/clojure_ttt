@@ -4,7 +4,10 @@
   (:use tictactoe.game))
 
 (describe "game"
-
+  (before-all
+    (reset! x-player-type "comuter")
+    (reset! o-player-type "ai"))
+ 
   (it "returns nil when invalid"
     (should= nil 
       (valid-move? [1 2 3 4 5 6 7 8 9] "10")))
@@ -47,10 +50,10 @@
       (with-in-str "human"
         (set-player-type "O"))))
 
-  (it "should reject an invalid player type"
-    (should= "human"
-      (with-in-str (make-input '("batman" "best type" "human"))
-        (set-player-type "X"))))
+  ;; (it "should reject an invalid player type"
+  ;;   (should= "human"
+  ;;     (with-in-str (make-input '("batman" "best type" "human"))
+  ;;       (set-player-type "X"))))
 
   (it "returns current player type"
     (should= "human" 
@@ -63,6 +66,17 @@
    (it "returns a random cell id"
     (should= true 
       (string? (get-computer-move [1 2 3 4 5 6 7 8 9]) )))
+
+  (it "calls #get-computer-move"
+    (with-redefs [get-computer-move (fn [& _] "1")]
+      (should= "1"
+         (get-move "X" [1 2 3 4 5 6 7 8 9]))))
+
+   ;; (it "calls #get-ai-move"
+   ;;  (with-redefs [get-ai-move (fn [& _] "2")]
+   ;;    (should= "2"
+   ;;       (get-move "O" ["X" 2 3 4 5 6 7 8 9]))))
+
 
   (it "adds valid move to the board and returns the board"
     (should= ["X" 2 "O" 4 5 6 7 8 9] 
