@@ -34,10 +34,16 @@
     (game-won-message piece board)
     (tie-game-message board))) 
 
+(defn filter-user-input [move]
+  (try
+    (read-string move)
+    (catch Exception e)))
+
 (defn valid-move? [board move]
-  (if (and (valid-cell? move) (open-cell? board move))
-    (do true)
-    (invalid-move-message move)))
+  (let [move (filter-user-input move)]
+    (if (and (valid-cell? move) (open-cell? board move))
+      (do true)
+      (invalid-move-message move))))
 
 (defn get-computer-move [board]
   (get-random-move board))

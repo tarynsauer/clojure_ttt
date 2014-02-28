@@ -16,6 +16,11 @@
     (should= true 
       (valid-move? [1 2 3 4 5 6 7 8 9] "7"))) 
   
+  (it "returns nil for bad characters"
+    (should= nil 
+      (valid-move? [1 2 3 4 5 6 7 8 9] "'"))) 
+
+
   (it "returns true for human player type"
     (should= true 
       ( valid-type? "human")))

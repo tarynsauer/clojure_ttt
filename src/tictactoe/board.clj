@@ -7,14 +7,9 @@
 (def o-win (repeat 3 (second piece)))
 
 (defn filter-printable [obj]
-  (cond
-   (or (symbol? obj) (number? obj) (string? obj) (keyword? obj)) obj
-   (vector? obj) (apply vector (map filter-printable obj))
-   (seq? obj) (map filter-printable obj)
-   (set? obj) (into #{} (map filter-printable obj))
-   (map? obj) (into {} (for [[k v] obj]
-                         [(filter-printable k) (filter-printable v)]))
-   true [:un-readable (pr-str obj)]))
+  (if (or (symbol? obj) (number? obj) (string? obj) (keyword? obj)) 
+   (pr-str (obj))))
+
 
 (defn open-cells [board]
   (filter integer? board)) 
@@ -72,10 +67,10 @@
          (recur (+ 2 begin-i) middle-i (- end-i 2)))))))
 
 (defn open-cell? [board cell]
-  (integer? (get board (dec (filter-printable cell)))))
+  (integer? (get board (dec cell))))
 
 (defn valid-cell? [cell]
-  (and (integer? (filter-printable cell)) (< 0 (filter-printable cell)) (> 10 (filter-printable cell))))
+  (and (integer? cell) (< 0 cell) (> 10 cell)))
 
 (defn remaining-spaces? [board]
   (loop [index 0]

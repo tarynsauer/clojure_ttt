@@ -105,11 +105,11 @@
 
   (it "returns false for occupied cell"
     (should= false 
-      (open-cell? [1 2 "X" 4 "O" 6 "O" 8 9] "3")))
+      (open-cell? [1 2 "X" 4 "O" 6 "O" 8 9] 3)))
 
   (it "returns true for open cell"
     (should= true 
-      (open-cell? [1 2 "X" 4 "O" 6 "O" 8 9] "1")))
+      (open-cell? [1 2 "X" 4 "O" 6 "O" 8 9] 1)))
 
   (it "returns false for an invalid cell id type"
     (should= false 
@@ -121,7 +121,7 @@
 
   (it "returns true for a valid cell id number"
     (should= true 
-      (valid-cell? "9")))
+      (valid-cell? 9)))
 
   (it "returns false when there are no remaining spaces"
     (should= false 
