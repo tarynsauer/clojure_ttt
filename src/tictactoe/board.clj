@@ -17,9 +17,14 @@
 (defn get-random-move [board]
   (str (first (filter integer? (shuffle board)))))
 
-(defn current-player [board]
+(defn current-player [board player-x player-o]
   (if (even? (count (filter string? board)))
-    (first piece)
+    player-x 
+    player-o))
+
+(defn current-piece [board]
+  (if (even? (count (filter string? board)))
+    (first piece) 
     (second piece)))
 
  (defn opponent [board]
@@ -28,7 +33,7 @@
     (second piece)))
 
  (defn apply-move [board move]
-  (assoc board (dec (read-string move)) (current-player board))) 
+  (assoc board (dec (read-string move)) (current-piece board)))
 
 (defn empty-board? [board]
   (= 9 (count (filter integer? board))))

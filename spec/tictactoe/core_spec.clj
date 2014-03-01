@@ -4,7 +4,6 @@
   (:use tictactoe.board)
   (:use tictactoe.game))
 
-
 (defn make-input [coll]
     (apply str (interleave coll (repeat "\n"))))  
 
@@ -12,5 +11,3 @@
   (set-player-type (first piece))
   (set-player-type (second piece))
   (play (new-board 9)))
-
-

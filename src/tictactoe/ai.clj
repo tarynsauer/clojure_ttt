@@ -9,43 +9,37 @@
 
 (def tie 0)
 
-(def current-player-piece (atom "X"))
-
-(defn set-current-player [piece]
-  (reset! current-player-piece piece))
-
-(defn get-score [board piece]
+(defn get-score [current-player-piece board]
   (if (winning-game? board)
-    (if (= (opponent board) @current-player-piece)
+    (if (= (opponent board) current-player-piece)
       win 
       loss)
      tie)) 
 
-(defn apply-minimax [board, piece, depth]
+(defn apply-minimax [current-player-piece, board, depth]
   (if (game-over? board)
-    (get-score board piece)
-    (let [best-scores (vec (minimax board, piece, depth))]
-      (if (= piece @current-player-piece)
+    (get-score current-player-piece board)
+    (let [best-scores (vec (minimax current-player-piece, board, depth))]
+      (if (= (opponent board) current-player-piece)
         (apply min best-scores)
         (apply max best-scores)))))
 
-(defn minimax [board, piece, depth]
-  (for [cell (open-cells board)] (/ (apply-minimax (apply-move board (str cell)), (current-player board), (inc depth)) depth)))
+(defn minimax [current-player-piece, board, depth]
+  (for [cell (open-cells board)] (/ (apply-minimax current-player-piece (apply-move board (str cell)), (inc depth)) depth)))
 
-(defn get-move-score [board, piece, cell]
+(defn get-move-score [current-player-piece, board, cell]
    (let [board (apply-move board (str cell)), depth 1] 
-     (apply-minimax board, piece, depth)))
+     (apply-minimax current-player-piece, board, depth)))
  
-(defn rank-possible-moves [board piece]
+(defn rank-possible-moves [current-player-piece board]
   (let [possible-moves (open-cells board)]
     (for [cell possible-moves] 
-      (get-move-score board, piece, cell))))
+      (get-move-score current-player-piece, board, cell))))
  
-(defn get-best-move [board piece]
-  (set-current-player piece)
-  (key (apply max-key val (reverse (into {} (map vector (vec (open-cells board)) (vec (rank-possible-moves board piece))))))))
+(defn get-best-move [current-player-piece board]
+    (key (apply max-key val (reverse (into {} (map vector (vec (open-cells board)) (vec (rank-possible-moves current-player-piece board))))))))
 
-(defn get-ai-move [board piece]
+(defn get-ai-move [current-player-piece  board]
   (if (empty-board? board)
     (get-random-move board) 
-    (str (get-best-move board piece))))
+    (str (get-best-move current-player-piece board))))

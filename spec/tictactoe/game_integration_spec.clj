@@ -12,7 +12,7 @@
      (re-find #"Player X wins!"
       (with-out-str 
         (with-in-str 
-          (make-input '("human" "human" "1" "2" "3" 
+          (make-input '("batman" "human" "human" "1" "2" "3" 
                         "4" "5" "6" "7" "8" "9")) (test-full-game))))))
 
   (it "should play out an ai versus ai game"

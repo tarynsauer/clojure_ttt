@@ -20,7 +20,6 @@
     (should= nil 
       (valid-move? [1 2 3 4 5 6 7 8 9] "'"))) 
 
-
   (it "returns true for human player type"
     (should= true 
       ( valid-type? "human")))
@@ -55,10 +54,10 @@
       (with-in-str "human"
         (set-player-type "O"))))
 
-  ;; (it "should reject an invalid player type"
-  ;;   (should= "human"
-  ;;     (with-in-str (make-input '("batman" "best type" "human"))
-  ;;       (set-player-type "X"))))
+   ;; (it "should reject an invalid player type"
+   ;;  (should= true 
+   ;;    (with-in-str (make-input ["batman" "best type" "human"])
+   ;;      (set-player-type "X"))))
 
   (it "returns current player type"
     (should= "human" 
@@ -77,12 +76,6 @@
       (should= "1"
          (get-move "X" [1 2 3 4 5 6 7 8 9]))))
 
-   ;; (it "calls #get-ai-move"
-   ;;  (with-redefs [get-ai-move (fn [& _] "2")]
-   ;;    (should= "2"
-   ;;       (get-move "O" ["X" 2 3 4 5 6 7 8 9]))))
-
-
   (it "adds valid move to the board and returns the board"
     (should= ["X" 2 "O" 4 5 6 7 8 9] 
       (with-in-str "3"
@@ -93,3 +86,5 @@
       (with-in-str "3"
         (next-move ["X" 2 3 4 5 6 7 8 9]))))
 )
+
+
